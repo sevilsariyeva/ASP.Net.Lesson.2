@@ -15,7 +15,15 @@ namespace Lesson._2.Services
             _productRepository = productRepository;
         }
 
-        public async Task<List<Product>> GetAllByKey(string key = "")
+        public void AddProduct(Product product)
+        {
+            _productRepository.AddAsync(product);
+        }
+        public void AddProductList(List<Product> products)
+        {
+            _productRepository.AddRangeAsync(products);
+        }
+        public async Task<List<Product>> GetAllProducts(string key = "")
         {
            var data=await _productRepository.GetAllAsync();
             return key != "" ? data.Where(s => s.Name.ToLower().Contains(key.ToLower())).ToList()

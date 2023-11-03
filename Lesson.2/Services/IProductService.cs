@@ -6,6 +6,8 @@ namespace Lesson._2.Services
 {
     public interface IProductService
     {
-        Task<List<Product>> GetAllByKey(string key="");
+        Task<List<Product>> GetAllProducts(string key="");
+        public void AddProduct(Product product);
+        public void AddProductList(List<Product> products);
     }
 }

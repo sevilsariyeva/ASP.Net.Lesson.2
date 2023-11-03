@@ -1,0 +1,25 @@
+﻿@model ProductViewModel
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    @foreach (var item in Model.Products)
+    {
+        <section style="border: 1px solid #ccc;
+    background-color:white;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    width: 40%;">
+            <div>
+                <h2 style="font-size: 1.5em;font-weight:bold;margin: 10px 0;">
+                    @item.Name
+                </h2>
+                <p style=" font-size: 1em; margin: 10px 0;"> @item.Description</p>
+                <h2 style=" font-weight: bold; font-size:1.2em;color: #333;"> @item.Price AZN</h2>
+                <h3 style=" color: #e74c3c;"> <b>@item.Discount %</b></h3>
+            </div>
+            <div style="text-align: right; max-width: 100px; margin-left:30%">
+                <img src="@item.ImageLink" alt="Image" style=" height:150px;">
+            </div>
+        </section>
+    }
+</div>

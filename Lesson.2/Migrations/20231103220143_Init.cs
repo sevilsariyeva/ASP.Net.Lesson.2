@@ -22,6 +22,17 @@ namespace Lesson._2.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Description", "Discount", "ImageLink", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1, "Drink", 10, "images\\cola.png", "Cola", 3 },
+                    { 2, "Drink", 5, "images\\fanta.png", "Fanta", 3 },
+                    { 3, "Chips", 15, "images\\ruffles.png", "Ruffles", 5 },
+                    { 4, "Chips", 15, "images\\lays.png", "Lays", 4 }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

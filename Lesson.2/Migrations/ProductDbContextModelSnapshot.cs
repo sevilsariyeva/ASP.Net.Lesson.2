@@ -43,6 +43,44 @@ namespace Lesson._2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Drink",
+                            Discount = 10,
+                            ImageLink = "images\\cola.png",
+                            Name = "Cola",
+                            Price = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Drink",
+                            Discount = 5,
+                            ImageLink = "images\\fanta.png",
+                            Name = "Fanta",
+                            Price = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Chips",
+                            Discount = 15,
+                            ImageLink = "images\\ruffles.png",
+                            Name = "Ruffles",
+                            Price = 5
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Chips",
+                            Discount = 15,
+                            ImageLink = "images\\lays.png",
+                            Name = "Lays",
+                            Price = 4
+                        });
                 });
 #pragma warning restore 612, 618
         }

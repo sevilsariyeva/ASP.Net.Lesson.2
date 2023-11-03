@@ -15,12 +15,16 @@ namespace Lesson._2.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task Add(Product product)
+        public async Task AddAsync(Product product)
         {
            await _dbContext.Products.AddAsync(product); 
            await _dbContext.SaveChangesAsync();
         }
-
+        public async Task AddRangeAsync(List<Product> products)
+        {
+            await _dbContext.Products.AddRangeAsync(products);
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task<List<Product>> GetAllAsync()
         {
             return await _dbContext.Products.ToListAsync();

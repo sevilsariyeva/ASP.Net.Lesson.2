@@ -7,6 +7,7 @@ namespace Lesson._2.Repositories
     public interface IProductRepository
     {
         Task<List<Product>> GetAllAsync();
-        Task Add(Product product);
+        Task AddAsync(Product product);
+        Task AddRangeAsync(List<Product> products);
     }
 }
