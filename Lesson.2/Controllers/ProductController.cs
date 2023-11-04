@@ -3,8 +3,11 @@ using Lesson._2.Models;
 using Lesson._2.Repositories;
 using Lesson._2.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Lesson._2.Controllers
@@ -13,6 +16,7 @@ namespace Lesson._2.Controllers
     {
 
         private readonly IProductService _productService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ProductController(IProductService productService)
         {
@@ -65,6 +69,46 @@ namespace Lesson._2.Controllers
             };
             return View(model);
         }
-     
+           [HttpGet]
+        public IActionResult Add()
+        {
+            var vm = new ProductAddViewModel
+            {
+                Product = new Product(),
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Add(ProductAddViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                _productService.AddProduct(vm.Product);
+                return RedirectToAction("index");
+            }
+            return View(vm);
+        }
+        [HttpPost]
+        [Route("/Upload")]
+        public IActionResult UploadImage(IFormFile imageFile)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var fileName = Path.GetFileName(imageFile.FileName);
+                var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fileName);
+
+                using (var stream = new FileStream(uploadPath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                // Construct and return the relative path to the uploaded image
+                var relativePath = Path.Combine("uploads", fileName);
+                return Json(new { filePath = relativePath });
+            }
+
+            return Json(new { error = "No image uploaded" });
+        }
     }
 }

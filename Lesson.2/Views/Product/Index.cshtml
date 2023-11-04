@@ -1,25 +1,33 @@
 ﻿@model ProductViewModel
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-    @foreach (var item in Model.Products)
-    {
-        <section style="border: 1px solid #ccc;
-    background-color:white;
-    border-radius: 5px;
-    margin: 20px;
-    padding: 20px;
-    display: flex;
-    width: 40%;">
-            <div>
-                <h2 style="font-size: 1.5em;font-weight:bold;margin: 10px 0;">
-                    @item.Name
-                </h2>
-                <p style=" font-size: 1em; margin: 10px 0;"> @item.Description</p>
-                <h2 style=" font-weight: bold; font-size:1.2em;color: #333;"> @item.Price AZN</h2>
-                <h3 style=" color: #e74c3c;"> <b>@item.Discount %</b></h3>
-            </div>
-            <div style="text-align: right; max-width: 100px; margin-left:30%">
-                <img src="@item.ImageLink" alt="Image" style=" height:150px;">
-            </div>
-        </section>
-    }
+<a href="Product/Add" style="background-color: #5dbea3; color:black; text-decoration:none; font-weight: bold; position: absolute; right: 0; top: 0; height: 50px; font-size: 1.5em;">Add New Product</a>
+<div style="margin-top: 60px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        @foreach (var item in Model.Products)
+        {
+            <section style="border: 1px solid #ccc;
+                background-color: white;
+                border-radius: 5px;
+                margin: 20px;
+                padding: 20px;
+                display: grid;
+                width: 40%;">
+                <div style="display: flex;">
+                    <div>
+                        <h2 style="font-size: 1.5em; font-weight: bold; margin: 10px 0;">@item.Name</h2>
+                        <p style="font-size: 1em; margin: 10px 0;">@item.Description</p>
+                    </div>
+                    <div style="margin-left: auto; margin-top: 10px;">
+                        <h2 style="font-weight: bold; font-size: 1.2em; color: #333;">@item.Price AZN</h2>
+                        <h3 style="color: #e74c3c;"><b>@item.Discount %</b></h3>
+                    </div>
+                </div>
+                <div style="max-width: 100px; margin: auto;">
+                    <img src="@item.ImageLink" alt="Image" style="height: 150px; text-align: right">
+                </div>
+                <div style="text-align: right;">
+                    <button style="width: 20%; height: 30px; background-color: #ffbd03; font-weight: bold;">Update</button>
+                </div>
+            </section>
+        }
+    </div>
 </div>
