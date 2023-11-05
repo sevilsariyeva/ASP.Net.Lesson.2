@@ -26,15 +26,18 @@ namespace Lesson._2.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Discount")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageLink")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")

@@ -20,6 +20,11 @@ namespace Lesson._2.Repositories
            await _dbContext.Products.AddAsync(product); 
            await _dbContext.SaveChangesAsync();
         }
+        public async Task UpdateAsync(Product product)
+        {
+            _dbContext.Products.Update(product);
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task AddRangeAsync(List<Product> products)
         {
             await _dbContext.Products.AddRangeAsync(products);

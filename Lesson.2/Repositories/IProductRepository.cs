@@ -8,6 +8,7 @@ namespace Lesson._2.Repositories
     {
         Task<List<Product>> GetAllAsync();
         Task AddAsync(Product product);
+        Task UpdateAsync(Product product);
         Task AddRangeAsync(List<Product> products);
     }
 }

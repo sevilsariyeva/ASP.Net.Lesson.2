@@ -8,6 +8,7 @@ namespace Lesson._2.Services
     {
         Task<List<Product>> GetAllProducts(string key="");
         public void AddProduct(Product product);
+        public void Update(Product product);
         public void AddProductList(List<Product> products);
     }
 }
