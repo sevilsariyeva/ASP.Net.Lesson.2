@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lesson._2.Controllers
@@ -43,7 +45,16 @@ namespace Lesson._2.Controllers
             };
             return View(vm);
         }
-    
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var product = await _productService.GetProductById(id);
+            var vm = new ProductUpdateViewModel
+            {
+                Product = product
+            };
+            return View(vm);
+        }
 
         [HttpPost]
         public IActionResult Add(ProductAddViewModel vm, IFormFile imageFile)
@@ -73,6 +84,30 @@ namespace Lesson._2.Controllers
             return View(vm);
         }
 
+        public async Task<IActionResult> UpdateProduct(int id)
+        {
+            var productList = await _productService.GetAllProducts();
+            var product=await _productService.GetProductById(id);
+            var existingProduct = productList.FirstOrDefault(p => p.Id == product.Id);
+            
+            if (existingProduct != null)
+            {
+                existingProduct.Name = product.Name;
+                existingProduct.Description = product.Description;
+                existingProduct.Price = product.Price;
+                existingProduct.Discount = product.Discount;
+                existingProduct.ImageLink = product.ImageLink;
+
+               await _productService.UpdateProduct(existingProduct);
+
+                return RedirectToAction("Index"); 
+            }
+            else
+            {
+               
+                return NotFound(); // Return a 404 Not Found response, or handle it as you see fit.
+            }
+        }
 
     }
 }

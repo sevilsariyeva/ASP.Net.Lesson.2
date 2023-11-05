@@ -1,5 +1,6 @@
 ﻿using Lesson._2.Entities;
 using Lesson._2.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,19 @@ namespace Lesson._2.Services
            var data=await _productRepository.GetAllAsync();
             return key != "" ? data.Where(s => s.Name.ToLower().Contains(key.ToLower())).ToList()
                 :data;
+        }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            var products = _productRepository.GetAllAsync();
+            var productList = await products;
+            var product= productList.FirstOrDefault(p=>p.Id==id);
+            return product;
+        }
+
+        public async Task UpdateProduct(Product product)
+        {
+            await _productRepository.UpdateAsync(product);
         }
     }
 }
