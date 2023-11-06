@@ -43,5 +43,9 @@ namespace Lesson._2.Services
         {
             await _productRepository.UpdateAsync(product);
         }
+        public async Task DeleteProduct(Product product)
+        {
+            await _productRepository.DeleteAsync(product);
+        }
     }
 }

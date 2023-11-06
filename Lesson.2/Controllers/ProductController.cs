@@ -84,19 +84,35 @@ namespace Lesson._2.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> UpdateProduct(int id)
+        public async Task<IActionResult> UpdateProduct(ProductUpdateViewModel vm, IFormFile imageFile)
         {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(fileStream);
+                }
+                vm.Product.ImageLink = $"images\\{uniqueFileName}";
+            }
             var productList = await _productService.GetAllProducts();
-            var product=await _productService.GetProductById(id);
-            var existingProduct = productList.FirstOrDefault(p => p.Id == product.Id);
+            var existingProduct = productList.FirstOrDefault(p => p.Id == vm.Product.Id);
             
             if (existingProduct != null)
             {
-                existingProduct.Name = product.Name;
-                existingProduct.Description = product.Description;
-                existingProduct.Price = product.Price;
-                existingProduct.Discount = product.Discount;
-                existingProduct.ImageLink = product.ImageLink;
+                existingProduct.Name = vm.Product.Name;
+                existingProduct.Description = vm.Product.Description;
+                existingProduct.Price = vm.Product.Price;
+                existingProduct.Discount = vm.Product.Discount;
+                existingProduct.ImageLink = vm.Product.ImageLink;
 
                await _productService.UpdateProduct(existingProduct);
 
@@ -104,10 +120,21 @@ namespace Lesson._2.Controllers
             }
             else
             {
-               
-                return NotFound(); // Return a 404 Not Found response, or handle it as you see fit.
+                return NotFound(); 
             }
         }
 
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productService.GetProductById(id);
+            await _productService.DeleteProduct(product);
+            var allProducts = await _productService.GetAllProducts();
+            var viewModel = new ProductViewModel
+            {
+                Products = allProducts
+            };
+            return View("Index",viewModel);
+        }
     }
 }

@@ -29,6 +29,10 @@
                     <input type="hidden" asp-for="@item.Id" />
                     <a href="@Url.Action("Update", "Product", new { id = item.Id })" style="width: 20%; text-decoration:none; padding:10px; height: 30px; background-color: #ffbd03; font-weight: bold;">Update</a>
                 </div>
+                <div style="text-align: left;">
+                    <input type="hidden" asp-for="@item.Id" />
+                    <a href="@Url.Action("Delete", "Product", new { id = item.Id })" style="width: 20%; text-decoration:none; padding:10px; color:white; height: 30px; background-color: red; font-weight: bold;">Delete</a>
+                </div>
             </section>
         }
     </div>
