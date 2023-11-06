@@ -81,7 +81,7 @@ namespace Lesson._2.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(vm);
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UpdateProduct(ProductUpdateViewModel vm, IFormFile imageFile)
@@ -129,12 +129,7 @@ namespace Lesson._2.Controllers
         {
             var product = await _productService.GetProductById(id);
             await _productService.DeleteProduct(product);
-            var allProducts = await _productService.GetAllProducts();
-            var viewModel = new ProductViewModel
-            {
-                Products = allProducts
-            };
-            return View("Index",viewModel);
+            return RedirectToAction("Index");
         }
     }
 }
